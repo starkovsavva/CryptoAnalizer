@@ -1,4 +1,4 @@
-package com.example.cryptoanalizer;
+package com.example.cryptoanalizer.cryptoanalizer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
