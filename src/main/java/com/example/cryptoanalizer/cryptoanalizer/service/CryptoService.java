@@ -8,7 +8,7 @@ public class CryptoService {
 
 
     private final static FileService fileService = new FileService();
-    private final String checkText = fileService.readFile(new File("russian.txt")).toString();
+    private static final String checkText = fileService.readFile(new File("russian.txt")).toString();
     public String processFile(File file, int key, boolean isDecode){
         StringBuilder builder = fileService.readFile(file);
 
@@ -50,7 +50,8 @@ public class CryptoService {
                 }
 
                 if(occurrences > 3) {
-//
+                    fileService.writeFile(string);
+                    break;
                 }
 
 

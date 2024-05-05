@@ -1,9 +1,6 @@
 package com.example.cryptoanalizer.cryptoanalizer.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class FileService {
     public StringBuilder readFile(File file){
@@ -15,7 +12,6 @@ public class FileService {
 
 
         }
-        catch (FileNotFoundException e){;}
         catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -24,7 +20,12 @@ public class FileService {
 
 
     public void writeFile(String string){
-
+        try(FileWriter writer = new FileWriter("output.txt")){
+            writer.write(string);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
