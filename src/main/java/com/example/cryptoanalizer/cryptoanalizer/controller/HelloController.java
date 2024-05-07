@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import java.io.*;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -17,6 +19,8 @@ public class HelloController {
     private Label Cryprosperma;
 
 
+    @FXML
+    private Button BruteForceAction;
     @FXML
     private TextArea entryText;
     @FXML
@@ -30,9 +34,13 @@ public class HelloController {
     @FXML
     private TextArea keyEnter;
 
-    private File file;
+    private File file = new File("output");
+
+    private int key;
+    private String processedstring;
 
     FileChooser fileChooser = new FileChooser();
+
 
     private boolean isDecode;
     private static final CryptoService CRYPTO_SERVICE = new CryptoService();
@@ -52,11 +60,35 @@ public class HelloController {
 
 
 
+    public void keyValidator(){
+        if(keyEnter.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Key must be non-empty!");
+            alert.showAndWait();
+        }
+        try{
+            this.key = Integer.parseInt(keyEnter.getText());
+        }
+        catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Wrong key!");
+            alert.showAndWait();
+        }
+
+    }
+
     @FXML
     public void decode(ActionEvent event) {
 
-        if (!this.file.exists()) {
-//            entryText.getText()
+        isDecode = true;
+        keyValidator();
+        if (!this.file.exists() ) {
+            String toDecode = entryText.getText();
+            this.processedstring = CRYPTO_SERVICE.processFile(toDecode,key,isDecode);
+            processedText.setText(processedstring);
+
+
+        }else if(this.file.exists()){
+            CRYPTO_SERVICE.processFile(this.file,key,isDecode);
+
         }
 
     }
@@ -64,8 +96,24 @@ public class HelloController {
 
     @FXML
     public void encode(ActionEvent event){
+        isDecode = false;
+        keyValidator();
+        if (!this.file.exists() ) {
+            String toDecode = entryText.getText();
+            this.processedstring = CRYPTO_SERVICE.processFile(toDecode,key,isDecode);
+            processedText.setText(processedstring);
+
+
+        }else if(this.file.exists()){
+            CRYPTO_SERVICE.processFile(this.file,key,isDecode);
+
+        }
+
+
         ;
     }
+    @FXML
+    public void bruteForceAction(){;}
 
 
 }

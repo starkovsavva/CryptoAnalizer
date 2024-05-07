@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
 
         stg = stage;
         stage.setResizable(false);
-        Parent root = FXMLLoader.load(getClass().getResource("Hello-Controller.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/cryptoanalizer/cryptoanalizer/Hello-Controller.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("CryptoAnylizer");
         stage.setScene(scene);
