@@ -12,49 +12,95 @@ public class CryptoService {
     private static final String checkText = fileService.readFile(new File("src/main/resources/russian.txt")).toString();
 
     public String processFile(File file, int key, boolean isDecode) {
-        StringBuilder builder = fileService.readFile(file);
+        String string = fileService.readFile(file).toString();
+
+        StringBuilder builder = new StringBuilder();
 
 
         try {
 
-            int i = 0;
-            while (!builder.isEmpty()) {
+            for(char c : string.toCharArray()){
 
-                if (CryptoUtil.CryptoAlphabet.ALPHABET.indexOf(builder.charAt(i)) != -1) {
-                    if (isDecode) {
-                        builder.setCharAt(i, CryptoUtil.CryptoAlphabet.ALPHABET.charAt(i - key));
-                    } else if (!(isDecode)) {
-                        builder.setCharAt(i, CryptoUtil.CryptoAlphabet.ALPHABET.charAt(i + key));
-                    }
+                if (c == ' '){
+                    builder.append(c);
+                    continue;
                 }
-                i++;
-            }
+                int index = CryptoUtil.CryptoAlphabet.ALPHABET.indexOf(c);
+                if(index != -1){
+                    if(isDecode){
+                        index = index - (key % CryptoUtil.CryptoAlphabet.ALPHABET.length());
+                        if(index < 0){
+                            index = index + CryptoUtil.CryptoAlphabet.ALPHABET.length();
+                        }
+                        if (index > 66){
+                            index = index % CryptoUtil.CryptoAlphabet.ALPHABET.length();
+                        }
+                        builder.append(CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index));
+                    }
+                    else{
 
-            fileService.writeFile(builder.toString());
+                        index = index + (key % CryptoUtil.CryptoAlphabet.ALPHABET.length()) ;
+                        if(index > 66){
+                            index = index % CryptoUtil.CryptoAlphabet.ALPHABET.length();
+                        }
+                        CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index);
+                        builder.append(CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index));
+                    }
+
+
+                } else{
+                    builder.append(c);
+                }
+
+            }
 
         } catch (Exception e) {
             ;
         }
+        fileService.writeFile(builder.toString());
         return builder.toString();
+
 
     }
     public String processFile(String string, int key, boolean isDecode) {
 
-        StringBuilder builder = new StringBuilder(string);
+        StringBuilder builder = new StringBuilder();
 
         try {
 
-            int i = 0;
-            while (!builder.isEmpty()) {
+            for(char c : string.toCharArray()){
 
-                if (CryptoUtil.CryptoAlphabet.ALPHABET.indexOf(builder.charAt(i)) != -1) {
-                    if (isDecode) {
-                        builder.setCharAt(i, CryptoUtil.CryptoAlphabet.ALPHABET.charAt(i - key));
-                    } else if (!(isDecode)) {
-                        builder.setCharAt(i, CryptoUtil.CryptoAlphabet.ALPHABET.charAt(i + key));
-                    }
+                if (c == ' '){
+                    builder.append(c);
+                    continue;
                 }
-                i++;
+                int index = CryptoUtil.CryptoAlphabet.ALPHABET.indexOf(c);
+                if(index != -1){
+                    if(isDecode){
+                        index = index - (key % CryptoUtil.CryptoAlphabet.ALPHABET.length());
+                        if(index < 0){
+                            index = index + CryptoUtil.CryptoAlphabet.ALPHABET.length();
+                        }
+                        if (index > 66){
+                            index = index % CryptoUtil.CryptoAlphabet.ALPHABET.length();
+                        }
+                        builder.append(CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index));
+                    }
+                    else{
+
+                        index = index + (key % CryptoUtil.CryptoAlphabet.ALPHABET.length()) ;
+                        if(index > 66){
+                            index = index % CryptoUtil.CryptoAlphabet.ALPHABET.length();
+                        }
+                        CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index);
+                        builder.append(CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index));
+                    }
+
+
+                } else{
+                    builder.append(c);
+                }
+
             }
 
         } catch (Exception e) {
@@ -79,7 +125,7 @@ public class CryptoService {
 
                 }
 
-                if (occurrences > 3) {
+                if (occurrences > 1) {
                     fileService.writeFile(string);
                     break;
                 }
@@ -90,6 +136,35 @@ public class CryptoService {
         } catch (Exception e) {
             ;
         }
+    }
+
+
+    public String BruteForce(String string1) {
+
+        try {
+            for (int i = 0; i < CryptoUtil.CryptoAlphabet.ALPHABET.length(); i++) {
+                int key = i;
+                int occurrences = 0;
+                String string = processFile(string1, key, true);
+                for (var word : string.split(" ")) {
+                    if (checkText.contains(word)) {
+                        occurrences++;
+                    }
+
+
+                }
+
+                if (occurrences > 1) {
+                    return string;
+                }
+
+
+            }
+
+        } catch (Exception e) {
+            ;
+        }
+        return null;
     }
 
 //    public int keyParse (TextArea keArea){

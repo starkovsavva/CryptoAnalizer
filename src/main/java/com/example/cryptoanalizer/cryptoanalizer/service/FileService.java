@@ -4,18 +4,20 @@ import java.io.*;
 
 public class FileService {
     public StringBuilder readFile(File file){
-        StringBuilder builder = new StringBuilder();
-        try(FileReader reader = new FileReader(file)){
-            while(reader.ready()){
-                builder.append(reader.read());
+        StringBuilder sb = new StringBuilder();
+        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
             }
-
-
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        catch (Exception e){
+            ;
         }
-        return  builder;
+        return sb;
     }
 
 

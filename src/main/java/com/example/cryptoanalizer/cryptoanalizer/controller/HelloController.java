@@ -5,20 +5,23 @@ import javafx.event.ActionEvent;
 
 import java.io.*;
 
+
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Pane.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class HelloController {
+
+
     @FXML
-    private Label Cryprosperma;
-
-
+    private Pane textFlow;
     @FXML
     private Button BruteForceAction;
     @FXML
@@ -35,61 +38,87 @@ public class HelloController {
     private TextArea keyEnter;
 
     private File file = new File("output");
-
     private int key;
     private String processedstring;
 
     FileChooser fileChooser = new FileChooser();
+    private boolean isopen = false;
 
-
-    private boolean isDecode;
+    private static boolean isDecode;
     private static final CryptoService CRYPTO_SERVICE = new CryptoService();
-//
-//
-//    string decodebutton(file sd, key){
-//         File = decode.service.decode()
-//    }
+
 
 
     @FXML
     public void choose(ActionEvent event) {
-        File file = fileChooser.showOpenDialog(new Stage());
-        this.file = file;
+
+        if(!isopen){
+            isopen = true;
+            File file = fileChooser.showOpenDialog(new Stage());
+            if(file != null){
+                this.file = file;
+            }
+            isopen = false;
+
+        }
+        if(file!= null){
+            textFlow.setVisible(true);
+        }
+
+
 //        CRYPTO_SERVICE.
     }
 
 
 
-    public void keyValidator(){
-        if(keyEnter.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR,"Key must be non-empty!");
-            alert.showAndWait();
-        }
+    public void processCode(){
         try{
-            this.key = Integer.parseInt(keyEnter.getText());
+            keyValidator();
         }
         catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR,"Wrong key!");
-            alert.showAndWait();
+            return;
         }
 
-    }
-
-    @FXML
-    public void decode(ActionEvent event) {
-
-        isDecode = true;
-        keyValidator();
-        if (!this.file.exists() ) {
+        if (!this.file.exists()) {
             String toDecode = entryText.getText();
             this.processedstring = CRYPTO_SERVICE.processFile(toDecode,key,isDecode);
             processedText.setText(processedstring);
 
 
-        }else if(this.file.exists()){
+        }
+        if(this.file.exists()){
             CRYPTO_SERVICE.processFile(this.file,key,isDecode);
 
         }
+
+    }
+    public void keyValidator() throws Exception {
+        if(keyEnter.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Key must be non-empty!");
+            alert.setHeaderText("KeyValue Error");
+            alert.setTitle("Title");
+            alert.showAndWait();
+            throw new Exception();
+        }
+        try{
+
+            this.key = Integer.parseInt(keyEnter.getText());
+        }
+        catch (NumberFormatException e ){
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Wrong key!");
+            alert.showAndWait();
+            throw new Exception();
+        }
+
+
+
+    }
+
+    @FXML
+    public void decode(ActionEvent event) {
+        isDecode = true;
+        processCode();
+
 
     }
 
@@ -97,10 +126,18 @@ public class HelloController {
     @FXML
     public void encode(ActionEvent event){
         isDecode = false;
-        keyValidator();
+        processCode();
+
+
+        ;
+    }
+    @FXML
+    public void bruteForceAction(ActionEvent event){
+
+        isDecode = true;
         if (!this.file.exists() ) {
             String toDecode = entryText.getText();
-            this.processedstring = CRYPTO_SERVICE.processFile(toDecode,key,isDecode);
+            this.processedstring = CRYPTO_SERVICE.BruteForce(toDecode);
             processedText.setText(processedstring);
 
 
@@ -109,11 +146,10 @@ public class HelloController {
 
         }
 
-
         ;
+
+
     }
-    @FXML
-    public void bruteForceAction(){;}
 
 
 }

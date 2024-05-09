@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cryptoanalizer.cryptoanalizer.controller.HelloController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+  </padding>
+   <Pane prefHeight="680.0" prefWidth="1387.0">
+      <children>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#383838" height="606.0" layoutX="-47.0" layoutY="-23.0" stroke="BLACK" strokeType="INSIDE" width="940.0" />
+      
+                    <Label fx:id="welcomeText" layoutX="21.0" prefHeight="88.0" prefWidth="405.0" text="CryptoAnalyzer" textAlignment="JUSTIFY" textFill="WHITE">
+            <font>
+               <Font name="Ebrima Bold" size="54.0" />
+            </font>
+         </Label>
+         <Pane layoutX="-147.0" layoutY="537.0" prefHeight="200.0" prefWidth="200.0" />
+         <Button fx:id="encodeButton" layoutX="627.0" layoutY="196.0" mnemonicParsing="false" onAction="#encode" prefHeight="73.0" prefWidth="213.0" text="Encode">
+            <font>
+               <Font name="Century" size="19.0" />
+            </font>
+         </Button>
+         <Button fx:id="decodeButton" layoutX="627.0" layoutY="102.0" mnemonicParsing="false" onAction="#decode" prefHeight="73.0" prefWidth="213.0" text="Decode">
+            <font>
+               <Font name="Century" size="19.0" />
+            </font>
+         </Button>
+         <TextArea fx:id="entryText" layoutX="21.0" layoutY="102.0" prefHeight="435.0" prefWidth="269.0" promptText="Your Text">
+            <font>
+               <Font size="11.0" />
+            </font>
+         </TextArea>
+         <TextArea fx:id="processedText" layoutX="315.0" layoutY="102.0" prefHeight="435.0" prefWidth="282.0" promptText="Processed Text">
+            <font>
+               <Font size="11.0" />
+            </font>
+         </TextArea>
+         <Button fx:id="choserFile" layoutX="634.0" layoutY="461.0" mnemonicParsing="false" onAction="#choose" prefHeight="73.0" prefWidth="200.0" text="File ">
+            <font>
+               <Font name="Century" size="19.0" />
+            </font>
+         </Button>
+         <TextArea fx:id="keyEnter" layoutX="645.0" layoutY="377.0" prefHeight="52.0" prefWidth="181.0" promptText="key">
+            <font>
+               <Font size="25.0" />
+            </font>
+         </TextArea>
+         <Button fx:id="BruteForceText" layoutX="627.0" layoutY="287.0" mnemonicParsing="false" onAction="#bruteForceAction" prefHeight="73.0" prefWidth="213.0" style="-fx-background-color: #ffa3a3;" text="BruteForce" textFill="RED" textOverrun="CLIP">
+            <font>
+               <Font name="Century" size="19.0" />
+            </font>
+         </Button>
+         <Pane fx:id="textFlow" layoutX="558.0" layoutY="5.0" prefHeight="88.0" prefWidth="282.0" visible="false">
+            <children>
+               <Text fill="WHITE" layoutX="26.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File chosen! " wrappingWidth="142.91015625">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Text>
+               <Text boundsType="VISUAL" fill="WHITE" layoutX="26.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All funtions now work with output.txt" wrappingWidth="304.6962890625">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Text>
+            </children>
+         </Pane>
+      </children>
+   </Pane>
+</VBox>
