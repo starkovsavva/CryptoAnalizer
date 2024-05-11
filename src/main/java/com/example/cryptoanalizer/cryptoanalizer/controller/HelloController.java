@@ -55,15 +55,17 @@ public class HelloController {
         if(!isopen){
             isopen = true;
             File file = fileChooser.showOpenDialog(new Stage());
+            textFlow.setVisible(true);
             if(file != null){
                 this.file = file;
             }
             isopen = false;
 
         }
-        if(file!= null){
-            textFlow.setVisible(true);
+        if(file == null){
+            textFlow.setVisible(false);
         }
+
 
 
 //        CRYPTO_SERVICE.

@@ -81,7 +81,7 @@ public class CryptoService {
                         if(index < 0){
                             index = index + CryptoUtil.CryptoAlphabet.ALPHABET.length();
                         }
-                        if (index > 66){
+                        if (index >= 66){
                             index = index % CryptoUtil.CryptoAlphabet.ALPHABET.length();
                         }
                         builder.append(CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index));
@@ -89,7 +89,7 @@ public class CryptoService {
                     else{
 
                         index = index + (key % CryptoUtil.CryptoAlphabet.ALPHABET.length()) ;
-                        if(index > 66){
+                        if(index >= 66){
                             index = index % CryptoUtil.CryptoAlphabet.ALPHABET.length();
                         }
                         CryptoUtil.CryptoAlphabet.ALPHABET.charAt(index);
